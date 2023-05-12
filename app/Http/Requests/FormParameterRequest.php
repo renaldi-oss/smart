@@ -24,7 +24,7 @@ class FormParameterRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_kriteria' => 'required|exists:kriteria,id',
+            'kriteria_id' => 'required|exists:kriteria,id',
             'nama' => 'required',
             'bobot' => 'required|numeric'
         ];
@@ -33,7 +33,7 @@ class FormParameterRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_kriteria.required' => 'Inputan Kriteria harus dipilih',
+            'kriteria_id.required' => 'Inputan Kriteria harus dipilih',
         ];
     }
 }

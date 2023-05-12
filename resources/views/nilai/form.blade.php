@@ -1,16 +1,16 @@
 @foreach ($result->groupBy("nama_kriteria") as $key => $value)
 {{-- <div class="form-group">
-    <input type="hidden" value="{{ $value[0]->id_kriteria }}" name="id_kriteria[]">
+    <input type="hidden" value="{{ $value[0]->kriteria_id }}" name="kriteria_id[]">
     <label for="parameter">Pilih Kriteria <strong>{{ $key }}</strong></label>
-    <select name="id_parameter[{{ $value[0]->id_kriteria }}]" id="parameter"
-        class="form-control @error('id_parameter.'.$value[0]->id_kriteria) is-invalid @enderror">
+    <select name="parameter_id[{{ $value[0]->kriteria_id }}]" id="parameter"
+        class="form-control @error('parameter_id.'.$value[0]->kriteria_id) is-invalid @enderror">
         <option value="">Pilih</option>
         @foreach ($value as $parameter)
         <option value="{{ $parameter->id }}"
-            {{ (old('id_parameter.'.$value[0]->id_kriteria) ?? in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
+            {{ (old('parameter_id.'.$value[0]->kriteria_id) ?? in_array($parameter->id, isset($parameter_id) ? $parameter_id->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
         @endforeach
     </select>
-    <x-errormessage error="id_parameter.{{ $value[0]->id_kriteria }}" />
+    <x-errormessage error="parameter_id.{{ $value[0]->kriteria_id }}" />
 </div> --}}
 {{-- buat text center untuk $key --}}
 <div class="text-center">
@@ -18,20 +18,20 @@
 </div>
 <div class="form-group row">
     <div class="col">
-        <input type="text" placeholder="Nilai" name="nilai[{{ $value[0]->id_kriteria }}]" id="nilai" class="form-control @error('nilai.'.$value[0]->id_kriteria) is-invalid @enderror" value="{{ old('nilai.'.$value[0]->id_kriteria) }}" required/>
-        <x-errormessage error="nilai.{{ $value[0]->id_kriteria }}" />
+        <input type="text" placeholder="Nilai" name="nilai[{{ $value[0]->kriteria_id }}]" id="nilai" class="form-control @error('nilai.'.$value[0]->kriteria_id) is-invalid @enderror" value="{{ old('nilai.'.$value[0]->kriteria_id) }}" required/>
+        <x-errormessage error="nilai.{{ $value[0]->kriteria_id }}" />
     </div>
     <div class="col">
-        <input type="hidden" value="{{ $value[0]->id_kriteria }}" name="id_kriteria[]">
-        <select name="id_parameter[{{ $value[0]->id_kriteria }}]" id="parameter"
-            class="form-control @error('id_parameter.'.$value[0]->id_kriteria) is-invalid @enderror">
+        <input type="hidden" value="{{ $value[0]->kriteria_id }}" name="kriteria_id[]">
+        <select name="parameter_id[{{ $value[0]->kriteria_id }}]" id="parameter"
+            class="form-control @error('parameter_id.'.$value[0]->kriteria_id) is-invalid @enderror">
             <option>Pilih</option>
             @foreach ($value as $parameter)
             <option value="{{ $parameter->id }}"
-                {{ (old('id_parameter.'.$value[0]->id_kriteria) ?? in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
+                {{ (old('parameter_id.'.$value[0]->kriteria_id) ?? in_array($parameter->id, isset($parameter_id) ? $parameter_id->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
             @endforeach
         </select>
-        <x-errormessage error="id_parameter.{{ $value[0]->id_kriteria }}" /> 
+        <x-errormessage error="parameter_id.{{ $value[0]->kriteria_id }}" /> 
     </div>
 </div>
 

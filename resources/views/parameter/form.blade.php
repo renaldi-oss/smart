@@ -1,12 +1,12 @@
 <div class="form-group">
     <label for="input-kriteria">Pilih Kriteria</label>
-    <select name="id_kriteria" id="input-kriteria" class="form-control @error('id_kriteria') is-invalid @enderror">
+    <select name="kriteria_id" id="input-kriteria" class="form-control @error('kriteria_id') is-invalid @enderror">
         <option value="">Pilih</option>
         @foreach ($kriteria as $kriteria)
-            <option {{ old('id_kriteria', ($parameter->id_kriteria ?? '')) == $kriteria->id ? 'selected' : '' }} value="{{ $kriteria->id }}">{{ $kriteria->nama }}</option>
+            <option {{ old('kriteria_id', ($parameter->kriteria_id ?? '')) == $kriteria->id ? 'selected' : '' }} value="{{ $kriteria->id }}">{{ $kriteria->nama }}</option>
         @endforeach
     </select>
-    <x-errormessage error="id_kriteria" />
+    <x-errormessage error="kriteria_id" />
 </div>
 <div class="form-group">
     <label for="input-nama">Kondisi Parameter</label>

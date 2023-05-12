@@ -16,7 +16,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Daftarkan Alternatif</h6>
                 <form action="{{ route('nilai.create') }}" method="GET" class="mt-3">
                     <div class="form-group">
-                        <select name="id_alternatif" class="form-control" id="namaAlternatif">
+                        <select name="alternatif_id" class="form-control" id="namaAlternatif">
                             <option value="">Pilih</option>
                             @foreach ($alternatif_->whereNotIn('nama', $result->groupBy('nama_alternatif')->keys()) as
                             $alternatif)
@@ -54,10 +54,10 @@
                 <a href="#daftar-alternatif">
                     <button class="btn btn-sm btn-primary mr-2">Ke Daftar</button>
                 </a>
-                <a href="{{ route('nilai.edit', $value[0]->id_alternatif) }}">
+                <a href="{{ route('nilai.edit', $value[0]->alternatif_id) }}">
                     <button class="btn btn-sm btn-info mr-2">Ubah</button>
                 </a>
-                <form method="POST" action="{{ route('nilai.destroy', $value[0]->id_alternatif) }}">
+                <form method="POST" action="{{ route('nilai.destroy', $value[0]->alternatif_id) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button type="submit" class="btn btn-sm btn-danger"

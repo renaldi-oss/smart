@@ -5,7 +5,7 @@
     <div class="card-body">
         <form action="{{ route('nilai.store') }}" method="post">
             {{ csrf_field() }}
-            <input type="hidden" value="{{ request('id_alternatif') }}" name="id_alternatif">
+            <input type="hidden" value="{{ request('alternatif_id') }}" name="alternatif_id">
             @include('nilai.form', ['tombol' => 'Daftar'])
         </form>
       </div>

@@ -12,14 +12,14 @@ class PerhitunganController extends Controller
     private function data()
     {
         $result = Nilai::select(
-            "kriteria.id as id_kriteria",
+            "kriteria.id as kriteria_id",
             "kriteria.nama as nama_kriteria",
             "alternatif.nama as nama_alternatif",
             "parameter.bobot as bobot_parameter",
         )
-            ->join("kriteria", "kriteria.id", "=", "nilai.id_kriteria")
-            ->join("parameter", "parameter.id", "=", "nilai.id_parameter")
-            ->join("alternatif", "alternatif.id", "=", "nilai.id_alternatif")
+            ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
+            ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
+            ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
             ->get();
 
         $kriteria_ = Kriteria::select('id', 'nama', 'bobot')->get();
@@ -34,7 +34,7 @@ class PerhitunganController extends Controller
             $bobot = collect();
             foreach ($value as $item) {
                 $bobot->push($item->bobot_parameter);
-                $total->push($item->bobot_parameter * $kriteria_->firstWhere('id', $item->id_kriteria)->normalisasi);
+                $total->push($item->bobot_parameter * $kriteria_->firstWhere('id', $item->kriteria_id)->normalisasi);
             }
             $nilai->push(collect([
                 'nama_alternatif' => $keys,

@@ -25,7 +25,7 @@ class FormNilaiRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_parameter.*' => 'required|exists:parameter,id',
+            'parameter_id.*' => 'required|exists:parameter,id',
         ];
     }
 
@@ -33,8 +33,8 @@ class FormNilaiRequest extends FormRequest
     {
         $messages = [];
         $kriteria = Kriteria::all();
-        foreach ($this->get('id_parameter') as $key => $value) {
-            $messages['id_parameter.'.$key.'.required'] = 'Inputan '.$kriteria[$key-1]->nama.' harus dipilih';
+        foreach ($this->get('parameter_id') as $key => $value) {
+            $messages['parameter_id.'.$key.'.required'] = 'Inputan '.$kriteria[$key-1]->nama.' harus dipilih';
         }
 
         return $messages;

@@ -9,7 +9,7 @@ class Parameter extends Model
 {
     use HasFactory;
     protected $table = 'parameter';
-    protected $fillable = ['id_kriteria', 'nama', 'bobot'];
+    protected $fillable = ['kriteria_id', 'nama', 'bobot'];
 
     public function kriteria()
     {

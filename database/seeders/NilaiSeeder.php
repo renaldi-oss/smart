@@ -75,6 +75,5 @@ class NilaiSeeder extends Seeder
                 ]);
             }
         }
-        
     }
 }
