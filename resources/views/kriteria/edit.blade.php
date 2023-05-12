@@ -6,8 +6,7 @@
         <form action="{{ route('kriteria.update', ['kriterium' =>$kriteria->id]) }}" method="post">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
-            @include('kriteria.form', ['tombol' => 'Ubah'])
-
+            @include('kriteria.form', ['tombol' => 'Edit'])
         </form>
       </div>
     </div>

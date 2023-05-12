@@ -1,5 +1,5 @@
 @foreach ($result->groupBy("nama_kriteria") as $key => $value)
-<div class="form-group">
+{{-- <div class="form-group">
     <input type="hidden" value="{{ $value[0]->id_kriteria }}" name="id_kriteria[]">
     <label for="parameter">Pilih Kriteria <strong>{{ $key }}</strong></label>
     <select name="id_parameter[{{ $value[0]->id_kriteria }}]" id="parameter"
@@ -11,7 +11,31 @@
         @endforeach
     </select>
     <x-errormessage error="id_parameter.{{ $value[0]->id_kriteria }}" />
+</div> --}}
+{{-- buat text center untuk $key --}}
+<div class="text-center">
+    <h4>{{ $key }}</h4>
 </div>
+<div class="form-group row">
+    <div class="col">
+        <input type="text" placeholder="Nilai" name="nilai[{{ $value[0]->id_kriteria }}]" id="nilai" class="form-control @error('nilai.'.$value[0]->id_kriteria) is-invalid @enderror" value="{{ old('nilai.'.$value[0]->id_kriteria) }}" required/>
+        <x-errormessage error="nilai.{{ $value[0]->id_kriteria }}" />
+    </div>
+    <div class="col">
+        <input type="hidden" value="{{ $value[0]->id_kriteria }}" name="id_kriteria[]">
+        <select name="id_parameter[{{ $value[0]->id_kriteria }}]" id="parameter"
+            class="form-control @error('id_parameter.'.$value[0]->id_kriteria) is-invalid @enderror">
+            <option>Pilih</option>
+            @foreach ($value as $parameter)
+            <option value="{{ $parameter->id }}"
+                {{ (old('id_parameter.'.$value[0]->id_kriteria) ?? in_array($parameter->id, isset($id_parameter) ? $id_parameter->toArray() : [])) == $parameter->id ? 'selected' : '' }}>{{ $parameter->nama_parameter }}</option>
+            @endforeach
+        </select>
+        <x-errormessage error="id_parameter.{{ $value[0]->id_kriteria }}" /> 
+    </div>
+</div>
+
+
 @endforeach
 <div class="mt-3">
     <button type="reset" class="btn btn-primary">Reset</button>

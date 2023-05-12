@@ -29,8 +29,8 @@
                     <td>A{{ str_pad($alternatif->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $alternatif->nama }}</td>
                     @if (auth()->user()->level === 'admin')
-                        <td class="d-flex justify-content-around">
-                            <a href="{{ route('alternatif.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info">Ubah</a>
+                        <td class="d-flex justify-content-center">
+                            <a href="{{ route('alternatif.edit', [$alternatif->id]) }}" class="btn btn-sm btn-info mr-2">Ubah</a>
                             <form method="POST" action="{{ route('alternatif.destroy', [$alternatif->id]) }}">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}

@@ -31,13 +31,13 @@
                     <td>{{ $kriteria->nama }}</td>
                     <td>{{ $kriteria->bobot }}%</td>
                     @if (auth()->user()->level === 'admin')
-                        <td class="d-flex justify-content-around">
-                            <a href="{{ route('kriteria.edit', [$kriteria->id]) }}" class="btn btn-sm btn-info">EDIT</a>
+                        <td class="d-flex justify-content-center">
+                            <a href="{{ route('kriteria.edit', [$kriteria->id]) }}" class="btn btn-sm btn-info mr-2">Edit</a>
                             <form method="POST" action="{{ route('kriteria.destroy', ['kriterium' => $kriteria->id]) }}">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                                 <input type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Hapus data ini?')" value="DELETE">
+                                    onclick="return confirm('Hapus data ini?')" value="delete">
                             </form>
                         </td>
                     @endif

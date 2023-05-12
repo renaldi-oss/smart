@@ -17,9 +17,8 @@
                 <thead class="thead-light">
                     <tr>
                         <th>No</th>
-                        <th>Kriteria</th>
                         <th>Parameter</th>
-                        <th>Nilai</th>
+                        <th>Bobot Nilai</th>
                         @if (auth()->user()->level === 'admin')
                             <th data-orderable="false">Opsi</th>
                         @endif
@@ -29,12 +28,11 @@
                     @foreach ($param as $p)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $p->nama_kriteria }}</td>
                         <td>{{ $p->nama }}</td>
-                        <td>{{ $p->bobot }}%</td>
+                        <td>{{ $p->bobot }}</td>
                         @if (auth()->user()->level === 'admin')
-                            <td class="d-flex justify-content-around">
-                                <a href="{{ route('parameter.edit', [$p->id]) }}" class="btn btn-sm btn-info">Edit</a>
+                            <td class="d-flex justify-content-center">
+                                <a href="{{ route('parameter.edit', [$p->id]) }}" class="btn btn-sm btn-info mr-2">Edit</a>
                                 <form method="POST" action="{{ route('parameter.destroy', [$p->id]) }}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
