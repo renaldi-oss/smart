@@ -3,7 +3,7 @@
 <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 @section('content')
-<x-breadcrumb title="Tampil Data Parameter" link="{{ route('kriteria.index') }}" item="Kreteria" subItem="Tampil Data" />
+<x-breadcrumb title="Data Parameter" link="{{ route('kriteria.index') }}" item="Kreteria" subItem="Parameter" />
 <div class="card mb-3">
     @if (auth()->user()->level === 'admin')
         <div class="card-header d-flex flex-row align-items-end justify-content-end">
@@ -11,40 +11,43 @@
         </div>
     @endif
     <div class="table-responsive px-3 pb-3">
-        <table class="table align-items-center table-hover table-bordered" id="parameter">
-            <thead class="thead-light">
-                <tr>
-                    <th>No</th>
-                    <th>Nama Kriteria</th>
-                    <th>Nama Sub Kriteria</th>
-                    <th>Bobot Kriteria</th>
-                    @if (auth()->user()->level === 'admin')
-                        <th data-orderable="false">Opsi</th>
-                    @endif
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($parameter_ as $parameter)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $parameter->nama_kriteria }}</td>
-                    <td>{{ $parameter->nama }}</td>
-                    <td>{{ $parameter->bobot }}%</td>
-                    @if (auth()->user()->level === 'admin')
-                        <td class="d-flex justify-content-around">
-                            <a href="{{ route('parameter.edit', [$parameter->id]) }}" class="btn btn-sm btn-info">Ubah</a>
-                            <form method="POST" action="{{ route('parameter.destroy', [$parameter->id]) }}">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-                                <input type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Hapus data ini?')" value="Hapus">
-                            </form>
-                        </td>
-                    @endif
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        @foreach ($parameter->groupby('nama_kriteria') as $param)
+            <h4 class="mb-2 mt-2 font-weight-bold text-primary">Kriteria : {{ $param[0]->nama_kriteria }}</h4>
+            <table class="table align-items-center table-hover table-bordered" id="parameter">
+                <thead class="thead-light">
+                    <tr>
+                        <th>No</th>
+                        <th>Kriteria</th>
+                        <th>Parameter</th>
+                        <th>Nilai</th>
+                        @if (auth()->user()->level === 'admin')
+                            <th data-orderable="false">Opsi</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($param as $p)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->nama_kriteria }}</td>
+                        <td>{{ $p->nama }}</td>
+                        <td>{{ $p->bobot }}%</td>
+                        @if (auth()->user()->level === 'admin')
+                            <td class="d-flex justify-content-around">
+                                <a href="{{ route('parameter.edit', [$p->id]) }}" class="btn btn-sm btn-info">Edit</a>
+                                <form method="POST" action="{{ route('parameter.destroy', [$p->id]) }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <input type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Hapus data ini?')" value="Hapus">
+                                </form>
+                            </td>
+                        @endif
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endforeach
     </div>
 </div>
 @endsection

@@ -9,7 +9,7 @@
     <x-errormessage error="id_kriteria" />
 </div>
 <div class="form-group">
-    <label for="input-nama">Nama Parameter</label>
+    <label for="input-nama">Kondisi Parameter</label>
     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="input-nama" name="nama" placeholder="Masukkan Nama Parameter" value="{{ old('nama', ($parameter->nama ?? '')) }}">
     <x-errormessage error="nama" />
 </div>

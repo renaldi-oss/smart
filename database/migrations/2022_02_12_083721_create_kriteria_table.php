@@ -17,6 +17,7 @@ class CreateKriteriaTable extends Migration
             $table->id();
             $table->string('nama');
             $table->unsignedInteger('bobot');
+            $table->enum('tipe', ['benefit', 'cost']);
             $table->timestamps();
         });
     }

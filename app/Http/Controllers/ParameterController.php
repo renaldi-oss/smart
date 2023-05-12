@@ -16,8 +16,9 @@ class ParameterController extends Controller
     public function index()
     {
         $result = Parameter::select("parameter.*", "kriteria.nama as nama_kriteria")->join("kriteria", "kriteria.id", "=", "parameter.id_kriteria")->orderBy('id_kriteria')->orderBy('bobot')->get();
+        
         return view('parameter.index', [
-            'parameter_' => $result,
+            'parameter' => $result
         ]);
     }
 
