@@ -65,7 +65,6 @@ class NilaiSeeder extends Seeder
             [55, 80, '137/90', 36.6, '16 gr/dL', '80 mg/dL', 'Menular', 'Tidak mengonsumsi', 'Pernah donor darah', 'Memiliki'],
             [37, 75, '155/100', 37, '17 gr/dL', '95 mg/dL', 'Non Menular', 'Tidak mengonsumsi', 'Donor darah teratur', 'Tidak memiliki']
         ];
-        // seed nilai
         for($i=0; $i<count($alternatif); $i++){
             for($j=0; $j<count($kriteria); $j++){
                 Nilai::create([
