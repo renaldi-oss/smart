@@ -25,7 +25,9 @@
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Daftar</button>
+                    <button type="submit" class="btn btn-primary" @if ($alternatif->whereNotIn('nama',
+                        $result->groupBy('nama_alternatif')->keys())->count() == 0) disabled
+                        @endif>Daftar</button>
                 </form>
             </div>
         </div>
