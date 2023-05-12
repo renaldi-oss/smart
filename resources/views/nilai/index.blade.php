@@ -13,12 +13,13 @@
     <div class="col-lg-6">
         <div class="card mb-4">
             <div class="card-body">
-                <h6 class="m-0 font-weight-bold text-primary">Daftarkan Alternatif</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Alternatif yang tidak terdaftar : {{ $alternatif->whereNotIn('nama', $result->groupBy('nama_alternatif')->keys())->count() }}</h6>
                 <form action="{{ route('nilai.create') }}" method="GET" class="mt-3">
                     <div class="form-group">
                         <select name="alternatif_id" class="form-control" id="namaAlternatif">
                             <option value="">Pilih</option>
-                            @foreach ($alternatif_->whereNotIn('nama', $result->groupBy('nama_alternatif')->keys()) as
+                            
+                            @foreach ($alternatif->whereNotIn('nama', $result->groupBy('nama_alternatif')->keys()) as
                             $alternatif)
                             <option value="{{ $alternatif->id }}">{{ $alternatif->nama }}</option>
                             @endforeach
@@ -32,7 +33,7 @@
     <div class="col-lg-6">
         <div class="card mb-4" id="daftar-alternatif">
             <div class="card-body">
-                <h4 class="mb-2 font-weight-bold text-primary">Alternatif yang sudah terdaftar</h4>
+                <h4 class="mb-2 font-weight-bold text-primary">Alternatif yang sudah terdaftar : {{ $result->groupBy('nama_alternatif')->count() }}</h4>
                 <div class="list-group" style="max-height: 250px; overflow-y: auto;">
                     @foreach ($result->groupBy('nama_alternatif')->keys() as $value)
                     <a href="#{{ str_replace(' ', '-', $value) }}" class="list-group-item list-group-item-action">
@@ -47,17 +48,18 @@
 <div class="col-lg-12 mb-4">
     <!-- Simple Tables -->
     @foreach ($result->groupBy('nama_alternatif') as $key => $value)
+    dd{{ $value[0] }}
     <div class="card mb-4" id="{{ str_replace(' ', '-', $key) }}">
         <div class="card-header py-3 row">
-            <h4 class="col-md-6 mb-2 font-weight-bold text-primary">Nama Alternatif : {{ $key }}</h4>
+            <h4 class="col-md-6 mb-2 font-weight-bold text-primary">Alternatif : {{ $key }}</h4>
             <div class="col-md-6 d-flex justify-content-end">
                 <a href="#daftar-alternatif">
                     <button class="btn btn-sm btn-primary mr-2">Ke Daftar</button>
                 </a>
-                <a href="{{ route('nilai.edit', $value[0]->alternatif_id) }}">
+                <a href="{{ route('nilai.edit', $value[0]->id) }}">
                     <button class="btn btn-sm btn-info mr-2">Ubah</button>
                 </a>
-                <form method="POST" action="{{ route('nilai.destroy', $value[0]->alternatif_id) }}">
+                <form method="POST" action="{{ route('nilai.destroy', $value[0]->id) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button type="submit" class="btn btn-sm btn-danger"
@@ -76,13 +78,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        @foreach ($value->groupBy("nama_parameter")->keys() as $parameter)
-                        <td class="text-center">{{ $parameter }}</td>
+                        @foreach ($value as $item)
+                        <td class="text-center">{{ $item->nilai }}</td>
                         @endforeach
+                    </tr>
+                    <tr>
+                        <td colspan="{{ $value->count() }}">PlaceHolder</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
     @endforeach
-    @endsection
+</div>
+@endsection

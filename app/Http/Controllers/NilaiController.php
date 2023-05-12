@@ -18,23 +18,22 @@ class NilaiController extends Controller
      */
     public function index()
     {
-        $result = Nilai::select(
-            "alternatif.id as alternatif_id",
-            "kriteria.nama as nama_kriteria",
-            "parameter.nama as nama_parameter",
-            "parameter.bobot as bobot_parameter",
-            "alternatif.nama as nama_alternatif",
-        )
-            ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
-            ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
-            ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
-            ->get();
+        
         if (count(Alternatif::all()) == 0 || count(Parameter::all()) == 0) {
             return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat mengisi data Nilai jika terdapat data yang masih kosong!");
         }
         return view('nilai.index', [
-            'result' => $result,
-            'alternatif_' => Alternatif::all()
+            'result' => Nilai::select(
+                "nilai.id",
+                "alternatif.nama as nama_alternatif",
+                "kriteria.nama as nama_kriteria",
+                "parameter.nama as nama_parameter",
+                "nilai.nilai"
+            )->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
+                ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
+                ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
+                ->get(),
+            'alternatif' => Alternatif::all()
         ]);
     }
 
@@ -87,7 +86,6 @@ class NilaiController extends Controller
         //     DB::rollback();
         //     return redirect()->route('nilai.create', ['alternatif_id' => $request->alternatif_id])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
         // }
-        // ubah kode diatas mengunakan eloquent
         foreach ($request->kriteria_id as $key => $value) {
             Nilai::create([
                 'kriteria_id' => $value,

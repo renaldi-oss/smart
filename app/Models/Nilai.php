@@ -26,4 +26,6 @@ class Nilai extends Model
     {
         return $this->belongsTo(Parameter::class);
     }
+
+    
 }
