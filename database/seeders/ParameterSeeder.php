@@ -15,14 +15,17 @@ class ParameterSeeder extends Seeder
     {
         $kriteria_ = \App\Models\Kriteria::all();
         $arr_values = [
-            [['Ph air < 5', 25], ['Ph air 5 - 8', 50], ['Ph air > 8', 25]],
-            [['< 28°C', 50], ['28-31°C', 35], ['> 31°C', 15]],
-            [['> 3 mg/l', 70], ['< 3 mg/l', 30]],
-            [['< 0,1 mg/l', 70], ['> 0,1 mg/l', 30]],
-            [['< 1 mg/l', 70], ['> 1 mg/l', 30]],
-            [['> 20 cm', 70], ['< 20 cm', 30]],
+            [['<= 17', 100], ['31 - 40', 90], ['41 - 50', 80], ['> 50', 70]], 
+            [['<= 46', 100], ['51 - 56', 75], ['57 - 62', 50], ['> 62', 25]],
+            [['<=113/75 mmHg', 100], ['115/75 mmHg - 115/80 mmHg', 75], ['117/78 mmHg - 118/78 mmHg', 50], ['> 118/78 mmHg', 25]],
+            [['36,5 *C - 36,7 *C', 100], ['36,8 *C - 37,0 *C', 90], ['37,1 *C - 37,3 *C', 80], ['> 37,3 *C', 70]],
+            [['> 18 gr/dL', 100], ['18 - 16 gr/dL', 75], ['15 - 13 gr/dL', 50], ['<= 13 gr/dL', 25]],
+            [['< 100 mg/dL', 100], ['100 - 125 mg/dL', 75], ['>= 125 mg/dL', 50]],
+            [['Tidak Ada', 100], ['Ada : non-menular', 75], ['Ada : menular', 50]],
+            [['Tidak Mengonsumsi', 100], ['Mengonsumsi : Sesuai Anjuran Dokter', 75], ['Mengonsumsi : Tidak Sesuai Anjuran Dokter', 50]],
+            [['Donor Darah Teratur', 100], ['Pernah, Namun Tidak Teratur', 75], ['Tidak Pernah', 50]],
+            [['Tidak Memiliki', 100], ['Memiliki', 50]]
         ];
-
         foreach ($kriteria_ as $key => $kriteria) {
             foreach ($arr_values[$key] as $values) {
                 \App\Models\Parameter::create([

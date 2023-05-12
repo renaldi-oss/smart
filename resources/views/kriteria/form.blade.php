@@ -13,6 +13,15 @@
         <x-errormessage error="bobot" />
     </div>
 </div>
+<div class="form-group">
+    <label for="input-tipe">Tipe Kriteria</label>
+    <select name="tipe" id="input-tipe" class="form-control @error('tipe') is-invalid @enderror">
+        <option value="">Pilih</option>
+        <option {{ old('tipe', ($kriteria->tipe ?? '')) == 'benefit' ? 'selected' : '' }} value="benefit">Benefit</option>
+        <option {{ old('tipe', ($kriteria->tipe ?? '')) == 'cost' ? 'selected' : '' }} value="cost">Cost</option>
+    </select>
+    <x-errormessage error="tipe" />
+</div>
 <button type="reset" class="btn btn-primary">Reset</button>
 <button type="submit" class="btn btn-primary">{{ $tombol }}</button>
 

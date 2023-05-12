@@ -18,8 +18,8 @@ class CreateNilaiTable extends Migration
             $table->unsignedBigInteger('id_alternatif');
             $table->unsignedBigInteger('id_kriteria');
             $table->unsignedBigInteger('id_parameter');
+            $table->string('nilai');
             $table->timestamps();
-
             $table->foreign('id_alternatif')->references('id')->on('alternatif')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('id_kriteria')->references('id')->on('kriteria')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('id_parameter')->references('id')->on('parameter')->cascadeOnDelete()->cascadeOnUpdate();

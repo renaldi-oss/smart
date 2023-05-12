@@ -71,20 +71,30 @@ class NilaiController extends Controller
     public function store(FormNilaiRequest $request)
     {
         $request->validated();
-        try {
-            DB::beginTransaction();
-            foreach ($request->id_kriteria as $key => $value) {
-                Nilai::create([
-                    'id_kriteria' => $value,
-                    'id_alternatif' => $request->id_alternatif,
-                    'id_parameter' => $request->id_parameter[$key + 1],
-                ]);
-            }
-            DB::commit();
-            return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('nilai.create', ['id_alternatif' => $request->id_alternatif])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
+        // try {
+        //     DB::beginTransaction();
+        //     foreach ($request->id_kriteria as $key => $value) {
+        //         Nilai::create([
+        //             'id_kriteria' => $value,
+        //             'id_alternatif' => $request->id_alternatif,
+        //             'id_parameter' => $request->id_parameter[$key + 1],
+        //             'nilai' => $request->nilai[$key + 1]
+        //         ]);
+        //     }
+        //     DB::commit();
+        //     return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->route('nilai.create', ['id_alternatif' => $request->id_alternatif])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
+        // }
+        // ubah kode diatas mengunakan eloquent
+        foreach ($request->id_kriteria as $key => $value) {
+            Nilai::create([
+                'id_kriteria' => $value,
+                'id_alternatif' => $request->id_alternatif,
+                'id_parameter' => $request->id_parameter[$key + 1],
+                'nilai' => $request->nilai[$key + 1]
+            ]);
         }
     }
 
