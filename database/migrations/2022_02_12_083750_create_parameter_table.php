@@ -15,7 +15,7 @@ class CreateParameterTable extends Migration
     {
         Schema::create('parameter', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("id_kriteria")->references("id")->on("kriteria")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId("kriteria_id")->references("id")->on("kriteria")->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('nama');
             $table->unsignedInteger('bobot');
             $table->timestamps();

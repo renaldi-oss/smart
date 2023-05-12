@@ -13,7 +13,7 @@ class AlternatifSeeder extends Seeder
      */
     public function run()
     {
-        Alternatif::create(
+        $arr =[
             ['nama' => 'Andi Kusuma'],
             ['nama' => 'Bagus Pratama'],
             ['nama' => 'Cika Fitriani'],
@@ -34,6 +34,9 @@ class AlternatifSeeder extends Seeder
             ['nama' => 'Reza Pahlevi'],
             ['nama' => 'Siti Nurhaliza'],
             ['nama' => 'Teguh Santoso']
-        );
+        ];
+        foreach ($arr as $key => $value) {
+            Alternatif::create($value);
+        }
     }
 }
