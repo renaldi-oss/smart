@@ -10,7 +10,7 @@
                             <div class="text-center">
                                 <img src="{{ asset('assets/img/logo/logo.png') }}" style="max-width: 200px">
                             </div>
-                            <form class="user my-5" action="{{ route('register') }}" method="POST">
+                            <form class="user my-5" action="{{ route('register.submit') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <input type="text" name="nama"

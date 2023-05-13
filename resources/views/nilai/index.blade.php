@@ -50,7 +50,6 @@
 <div class="col-lg-12 mb-4">
     <!-- Simple Tables -->
     @foreach ($result->groupBy('nama_alternatif') as $key => $value)
-    dd{{ $value[0] }}
     <div class="card mb-4" id="{{ str_replace(' ', '-', $key) }}">
         <div class="card-header py-3 row">
             <h4 class="col-md-6 mb-2 font-weight-bold text-primary">Alternatif : {{ $key }}</h4>
@@ -83,9 +82,6 @@
                         @foreach ($value as $item)
                         <td class="text-center">{{ $item->nilai }}</td>
                         @endforeach
-                    </tr>
-                    <tr>
-                        <td colspan="{{ $value->count() }}">PlaceHolder</td>
                     </tr>
                 </tbody>
             </table>

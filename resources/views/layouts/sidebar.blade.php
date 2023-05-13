@@ -52,8 +52,8 @@
             <div class="sidebar-heading">
                 fitur
             </div>
-            <li class="nav-item {{ Route::currentRouteName('perhitungan.tampil') === 'perhitungan.tampil' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('perhitungan.tampil') }}">
+            <li class="nav-item {{ Route::currentRouteName('perhitungan.index') === 'perhitungan.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('perhitungan.index') }}">
                     <i class="fas fa-puzzle-piece"></i>
                     <span>Perhitungan</span>
                 </a>

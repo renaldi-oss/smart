@@ -47,8 +47,26 @@ class PerhitunganController extends Controller
         return collect(['kriteria' => $kriteria_, 'nilai' => $nilai]);
     }
 
-    public function tampil()
+    // step 1 normalisasi
+    private function normalisasi(){
+        // normalisasi kriteria
+        $normalisasikriteria = Kriteria::select('id', 'nama', 'bobot')->get();
+        $normalisasikriteria->map(function ($item) use ($normalisasikriteria) {
+            $item['normalisasi'] = round(($item['bobot'] / $normalisasikriteria->pluck('bobot')->sum()),2);
+            return $item;
+        });
+        return $normalisasikriteria;
+    }
+
+    // step 2 perhitungan nilai utility
+    private function utility(){
+
+    }
+
+
+    public function index()
     {
+        dd($this->normalisasi());
         $data = $this->data();
         foreach ($data as $value) {
             if (count($value) == 0) {

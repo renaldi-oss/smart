@@ -28,12 +28,13 @@ class NilaiController extends Controller
                 "alternatif.nama as nama_alternatif",
                 "kriteria.nama as nama_kriteria",
                 "parameter.nama as nama_parameter",
-                "nilai.nilai"
+                "nilai.nilai",
             )->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
                 ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
                 ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
                 ->get(),
-            'alternatif' => Alternatif::all()
+            'alternatif' => Alternatif::all(),
+            'parameter' => Parameter::all()
         ]);
     }
 
