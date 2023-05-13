@@ -39,7 +39,7 @@
                 <x-toast message="{{ session()->get('pesan'); }}" status="{{ session()->get('status'); }}" />
                 @endif
                 <!-- Container Fluid-->
-                <div class="container" id="container-wrapper">
+                <div class="container-fluid" id="container-wrapper">
                     @yield('content')
                 </div>
                 <!---Container Fluid-->
