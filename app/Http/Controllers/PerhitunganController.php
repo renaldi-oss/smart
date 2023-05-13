@@ -43,7 +43,6 @@ class PerhitunganController extends Controller
                 'total' => $total->sum(),
             ]));
         }
-
         return collect(['kriteria' => $kriteria_, 'nilai' => $nilai]);
     }
 
@@ -63,10 +62,10 @@ class PerhitunganController extends Controller
 
     }
 
-
     public function index()
     {
-        dd($this->normalisasi());
+        $normalisasi = $this->normalisasi();
+        
         $data = $this->data();
         foreach ($data as $value) {
             if (count($value) == 0) {

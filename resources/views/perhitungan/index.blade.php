@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     @foreach($kriteria_ as $kriteria)
-                    <td>{{ round($kriteria->normalisasi, 3) }}</td>
+                    <td>{{ round($kriteria->normalisasi, 2) }}</td>
                     @endforeach
                 </tr>
             </tbody>
