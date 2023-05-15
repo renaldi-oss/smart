@@ -53,17 +53,28 @@ class PerhitunganController extends Controller
         $normalisasikriteria->map(function ($item) use ($normalisasikriteria) {
             $item['normalisasi'] = round(($item['bobot'] / $normalisasikriteria->pluck('bobot')->sum()),2);
             return $item;
-        });
+        });  
         return $normalisasikriteria;
     }
 
     // step 2 perhitungan nilai utility
     private function utility(){
-
+        $utility = collect();
+        $bobotParameter = Nilai::select('parameter.bobot as bobot')
+            ->join('parameter', 'parameter.id', '=', 'nilai.parameter_id')
+            ->get();
+        // dd semua bobot parameter
+        $bobotParameter->map(function ($item) use ($bobotParameter) {
+            $item['bobot_parameter'] = $bobotParameter->pluck('bobot');
+            return $item;
+        });
+        dd($bobotParameter[0]->bobot_parameter);
     }
 
     public function index()
     {
+
+        // $this->utility();
         $normalisasi = $this->normalisasi();
         
         $data = $this->data();

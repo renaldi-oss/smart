@@ -21,28 +21,6 @@ class NilaiSeeder extends Seeder
         $alternatif = Alternatif::get();
         $kriteria = Kriteria::get();
         $parameter = Parameter::where('kriteria_id', 3)->pluck('id','nama');
-        $tekanandarah = [
-            "Tekanan darah normal",
-            "Tekanan darah tinggi",
-            "Tahap 1 tekanan darah tinggi",
-            "Tahap 2 tekanan darah tinggi",
-            "Tekanan darah normal",
-            "Tekanan darah tinggi",
-            "Tahap 1 tekanan darah tinggi",
-            "Tahap 2 tekanan darah tinggi",
-            "Tekanan darah normal",
-            "Tekanan darah tinggi",
-            "Tahap 1 tekanan darah tinggi",
-            "Tahap 2 tekanan darah tinggi",
-            "Tekanan darah normal",
-            "Tekanan darah tinggi",
-            "Tahap 1 tekanan darah tinggi",
-            "Tahap 2 tekanan darah tinggi",
-            "Tekanan darah normal",
-            "Tekanan darah tinggi",
-            "Tahap 1 tekanan darah tinggi",
-            "Tahap 2 tekanan darah tinggi"
-        ];
         $nilai = [
             [49, 70, '110/80', 36.6, '15 gr/dL', '120 mg/dL', 'Non-menular', 'Mengonsumsi', 'Donor teratur', 'Ya'],
             [40, 68, '130/90', 36.9, '13 gr/dL', '100 mg/dL', 'Non-menular', 'Tidak mengonsumsi', 'Pernah donor', 'Ya'],
@@ -65,12 +43,34 @@ class NilaiSeeder extends Seeder
             [55, 80, '137/90', 36.6, '16 gr/dL', '80 mg/dL', 'Menular', 'Tidak mengonsumsi', 'Pernah donor darah', 'Memiliki'],
             [37, 75, '155/100', 37, '17 gr/dL', '95 mg/dL', 'Non Menular', 'Tidak mengonsumsi', 'Donor darah teratur', 'Tidak memiliki']
         ];
+        $bobotParameter = [
+            [80, 25, 100, 90, 100, 90, 75, 75, 100, 100],
+            [50, 25, 75, 90, 75, 75, 50, 100, 75, 100],
+            [70, 50, 50, 90, 80, 50, 75, 50, 100, 50],
+            [50, 75, 25, 100, 100, 90, 75, 75, 50, 100],
+            [50, 75, 100, 90, 70, 80, 50, 100, 50, 100],
+            [50, 50, 75, 90, 90, 75, 75, 100, 100, 100],
+            [25, 25, 50, 70, 80, 80, 50, 75, 75, 50],
+            [25, 25, 25, 90, 75, 75, 100, 100, 50, 100],
+            [25, 25, 100, 90, 90, 90, 50, 50, 75, 100],
+            [50, 50, 75, 100, 75, 90, 75, 50, 100, 75],
+            [70, 25, 50, 90, 100, 70, 75, 100, 100, 50],
+            [25, 25, 25, 100, 90, 80, 50, 75, 75, 50],
+            [50, 75, 100, 90, 80, 50, 75, 100, 50, 50],
+            [80, 25, 75, 90, 70, 90, 75, 100, 100, 50],
+            [50, 50, 50, 70, 80, 80, 25, 75, 75, 50],
+            [50, 75, 25, 90, 90, 75, 75, 100, 100, 50],
+            [25, 50, 100, 90, 70, 90, 75, 75, 75, 50],
+            [70, 50, 75, 90, 90, 75, 75, 100, 50, 50],
+            [70, 75, 50, 90, 70, 90, 75, 100, 75, 100],
+            [50, 75, 25, 100, 100, 90, 75, 75, 100, 50]
+        ];
         for($i=0; $i<count($alternatif); $i++){
             for($j=0; $j<count($kriteria); $j++){
                 Nilai::create([
                     'alternatif_id' => $alternatif[$i]->id,
                     'kriteria_id' => $kriteria[$j]->id,
-                    'parameter_id' => $parameter[$tekanandarah[$i]],
+                    'parameter_id' => Parameter::where('bobot', $bobotParameter[$i][$j])->first()->id,
                     'nilai' => $nilai[$i][$j]
                 ]);
             }

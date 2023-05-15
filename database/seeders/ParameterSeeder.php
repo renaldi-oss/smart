@@ -13,7 +13,7 @@ class ParameterSeeder extends Seeder
      */
     public function run()
     {
-        $kriteria_ = \App\Models\Kriteria::all();
+        $kriteria_ = Kriteria::all();
         $arr_values = [
             [['<= 17', 100], ['31 - 40', 90], ['41 - 50', 80], ['> 50', 70]], 
             [['<= 46', 100], ['51 - 56', 75], ['57 - 62', 50], ['> 62', 25]],
