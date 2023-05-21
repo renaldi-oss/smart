@@ -13,17 +13,17 @@ class AlternatifSeeder extends Seeder
      */
     public function run()
     {
-        $arr =[
-            ['nama' => 'Andi Kusuma'],
-            ['nama' => 'Bagus Pratama'],
-            ['nama' => 'Cika Fitriani'],
-            ['nama' => 'Dian Wahyuni'],
-            ['nama' => 'Eko Santoso'],
-            ['nama' => 'Fajar Wicaksono'],
-            ['nama' => 'Gina Maulina'],
-            ['nama' => 'Hadi Santoso'],
-            ['nama' => 'Indra Permana'],
-            ['nama' => 'Joko Setiawan'],
+        $arr = [
+            ['nama' => 'Ibnu Hajar'],
+            ['nama' => 'Endah Eva Yanti'],
+            ['nama' => 'Mhd. Ridwan'],
+            ['nama' => 'Hengki Syahputra'],
+            ['nama' => 'Paiman'],
+            ['nama' => 'Hasmiyanti'],
+            ['nama' => 'Ditha Gusmita'],
+            ['nama' => 'Widi Asri'],
+            ['nama' => 'Siti Sundari'],
+            ['nama' => 'Deswita Andayani'],
             ['nama' => 'Kusumo Wijaya'],
             ['nama' => 'Lenny Kurniawan'],
             ['nama' => 'Mita Kusuma'],

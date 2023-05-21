@@ -59,22 +59,84 @@ class PerhitunganController extends Controller
 
     // step 2 perhitungan nilai utility
     private function utility(){
-        $utility = collect();
-        $bobotParameter = Nilai::select('parameter.bobot as bobot')
-            ->join('parameter', 'parameter.id', '=', 'nilai.parameter_id')
+        $utility = collect([]);
+        $nilaiParameter = Nilai::select(
+            "kriteria.id as kriteria_id",
+            "kriteria.nama as nama_kriteria",
+            "kriteria.tipe as tipe_kriteria",
+            "alternatif.nama as nama_alternatif",
+            "parameter.bobot as bobot_parameter",
+        )
+            ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
+            ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
+            ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
             ->get();
-        // dd semua bobot parameter
-        $bobotParameter->map(function ($item) use ($bobotParameter) {
-            $item['bobot_parameter'] = $bobotParameter->pluck('bobot');
-            return $item;
+        // dd($nilaiParameter);
+        // step 2.1 mencari nilai max & min dari setiap kriteria
+        $nilaiMax = $nilaiParameter->where('tipe_kriteria', 'benefit')->groupBy('nama_kriteria')->map(function($item){
+            return $item->pluck('bobot_parameter')->max();
         });
-        dd($bobotParameter[0]->bobot_parameter);
+        $nilaiMin = $nilaiParameter->where('tipe_kriteria', 'benefit')->groupBy('nama_kriteria')->map(function($item){
+            return $item->pluck('bobot_parameter')->min();
+        });
+        $max = array_values($nilaiMax->toArray());
+        $min = array_values($nilaiMin->toArray());
+        // dd($max, $min);
+        // step 2.2 perhitungan nilai utility(benefit & cost)
+        
+        foreach($nilaiParameter->groupBy('tipe_kriteria') as $key => $value){
+            // step 2.2.1 perhitungan nilai utility benefit
+            if($key == 'benefit'){
+                $value->map(function ($item) use ($utility, $nilaiMax, $nilaiMin) {
+                    $utility->push(collect([
+                        'nama_alternatif' => $item->nama_alternatif,
+                        'nama_kriteria' => $item->nama_kriteria,
+                        'nilai_utility' => ($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),
+                        'max' => $nilaiMax[$item->nama_kriteria],
+                        'min' => $nilaiMin[$item->nama_kriteria],
+                        'bobot_parameter' => $item->bobot_parameter,
+                    ]));
+                });
+            // step 2.2.2 perhitungan nilai utility cost
+            }else{
+                
+            }
+        }
+        // dd($utility);
+        return $utility;
+    }
+
+    // step 3 perhitungan nilai akhir
+    private function nilaiAkhir(){
+        $nilaiAkhir = collect([]);
+        $utility = $this->utility();
+        // dd($utility);
+        // group by nama_alternatif
+        foreach($utility->groupBy('nama_alternatif') as $key => $value){
+            // double(sum) nilai utility untuk setiap nama_alternatif
+            $sumUtility = $value->sum('nilai_utility');
+            $nilaiAkhir->push(collect([
+                'nama_alternatif' => $key,
+                'nilai_akhir' => number_format($sumUtility, 2)
+            ]));
+        }
+        
+        return $nilaiAkhir;
+    }
+    // ranking nilai akhir
+    private function ranking(){
+        $nilaiAkhir = $this->nilaiAkhir();
+        $ranking = $nilaiAkhir->sortByDesc('nilai_akhir');
+        dd($ranking);
+        return $ranking;
     }
 
     public function index()
     {
-
+        
         // $this->utility();
+        // $this->nilaiAkhir();
+        $this->ranking();
         $normalisasi = $this->normalisasi();
         
         $data = $this->data();
