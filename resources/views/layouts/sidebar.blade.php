@@ -3,7 +3,7 @@
         <div class="sidebar-brand-icon">
             <img src="{{ asset('assets/img/logo/logo.png') }}">
         </div>
-        <div class="sidebar-brand-text mx-3">E-SPK-SMART</div>
+        <div class="sidebar-brand-text mx-3">SMART</div>
     </a>
         <li class="nav-item {{ Route::currentRouteName('beranda') === 'beranda' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('beranda') }}">

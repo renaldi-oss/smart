@@ -9,8 +9,7 @@ use Spipu\Html2Pdf\Html2Pdf;
 
 class PerhitunganController extends Controller
 {
-    private function data()
-    {
+    private function data(){
         $result = Nilai::select(
             "kriteria.id as kriteria_id",
             "kriteria.nama as nama_kriteria",
@@ -56,10 +55,7 @@ class PerhitunganController extends Controller
         });  
         return $normalisasikriteria;
     }
-
-    // step 2 perhitungan nilai utility
-    private function utility(){
-        $utility = collect([]);
+    private function parameter(){
         $nilaiParameter = Nilai::select(
             "kriteria.id as kriteria_id",
             "kriteria.nama as nama_kriteria",
@@ -71,6 +67,13 @@ class PerhitunganController extends Controller
             ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
             ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
             ->get();
+        return $nilaiParameter;
+    }
+
+    // step 2 perhitungan nilai utility
+    private function utility(){
+        $utility = collect([]);
+        $nilaiParameter = $this->parameter();
         // dd($nilaiParameter);
         // step 2.1 mencari nilai max & min dari setiap kriteria
         $nilaiMax = $nilaiParameter->where('tipe_kriteria', 'benefit')->groupBy('nama_kriteria')->map(function($item){
@@ -91,7 +94,7 @@ class PerhitunganController extends Controller
                     $utility->push(collect([
                         'nama_alternatif' => $item->nama_alternatif,
                         'nama_kriteria' => $item->nama_kriteria,
-                        'nilai_utility' => ($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),
+                        'nilai_utility' => round(($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),2),
                         'max' => $nilaiMax[$item->nama_kriteria],
                         'min' => $nilaiMin[$item->nama_kriteria],
                         'bobot_parameter' => $item->bobot_parameter,
@@ -101,8 +104,8 @@ class PerhitunganController extends Controller
             }else{
                 
             }
+            // dd($utility);
         }
-        // dd($utility);
         return $utility;
     }
 
@@ -110,42 +113,43 @@ class PerhitunganController extends Controller
     private function nilaiAkhir(){
         $nilaiAkhir = collect([]);
         $utility = $this->utility();
-        // dd($utility);
-        // group by nama_alternatif
         foreach($utility->groupBy('nama_alternatif') as $key => $value){
-            // double(sum) nilai utility untuk setiap nama_alternatif
             $sumUtility = $value->sum('nilai_utility');
             $nilaiAkhir->push(collect([
                 'nama_alternatif' => $key,
-                'nilai_akhir' => number_format($sumUtility, 2)
+                'nilai_akhir' => number_format($sumUtility,2)
             ]));
         }
-        
+        // dd($nilaiAkhir);
         return $nilaiAkhir;
     }
-    // ranking nilai akhir
+    // step 4 perankingan
     private function ranking(){
         $nilaiAkhir = $this->nilaiAkhir();
         $ranking = $nilaiAkhir->sortByDesc('nilai_akhir');
-        dd($ranking);
         return $ranking;
     }
-
+    
     public function index()
-    {
-        
-        // $this->utility();
-        // $this->nilaiAkhir();
-        $this->ranking();
-        $normalisasi = $this->normalisasi();
-        
+    {   
+        // dd($this->nilaiAkhir(), $this->ranking());
+
         $data = $this->data();
         foreach ($data as $value) {
             if (count($value) == 0) {
                 return redirect()->back()->with('status', 'warning')->with('pesan', "Tidak dapat melihat data Perhitungan jika terdapat data yang masih kosong!");
             }
         };
-        return view('perhitungan.index', ['kriteria_' => $data['kriteria'], 'nilai' => $data['nilai']]);
+        // dd($this->parameter());
+        return view('perhitungan.index', [
+            'kriteria_' => $data['kriteria'], 
+            'nilai' => $data['nilai'],
+            'normalisasi' => $this->normalisasi(),
+            'parameter' => $this->parameter(),
+            'utility' => $this->utility(),
+            'nilaiAkhir' => $this->nilaiAkhir(),
+            'ranking' => $this->ranking(),
+        ]);
     }
 
     public function cetak()
