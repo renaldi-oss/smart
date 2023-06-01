@@ -6,9 +6,9 @@
 <x-breadcrumb title="Tampil Data Perhitungan" link="#" item="Perhitungan" subItem="Tampil Data" />
 @if (auth()->user()->level === 'admin')
 <div class="mb-3 d-flex flex-row align-items-end justify-content-end d-print-none">
-    <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }}" class="btn btn-danger">
+    {{-- <button onclick="{{ 'window.location.href=\''.route('perhitungan.cetak').'\'' }}" class="btn btn-danger">
         <i class="fas fa-file-pdf"></i> Cetak Data
-    </button>
+    </button> --}}
 </div>
 @endif
 
@@ -16,7 +16,8 @@
 @include('perhitungan.partials.kriteria')
 @include('perhitungan.partials.dataAsli')
 @include('perhitungan.partials.kriteriaAlternatif')
-@include('perhitungan.partials.perangkingan')
+@include('perhitungan.partials.utility')
+@include('perhitungan.partials.nilaiAkhir')
 
 @endsection
 @push('script')

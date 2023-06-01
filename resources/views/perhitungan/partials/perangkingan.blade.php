@@ -15,6 +15,7 @@
                 </tr>
             </thead>
             <tbody>
+                {{-- {{ dd($nilaiAkhir) }} --}}
                 @foreach ($nilai->sortByDesc('total', SORT_NATURAL) as $value)
                 <tr @once class="bg-primary text-white" @endonce>
                     <th>{{ $value['nama_alternatif'] }}</th>

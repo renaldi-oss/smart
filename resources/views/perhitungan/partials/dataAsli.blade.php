@@ -16,8 +16,10 @@
                 @foreach ($nilai as $value)
                 <tr>
                     <th>{{ $value['nama_alternatif'] }}</th>
-                    @foreach ($value['bobot_parameter'] as $item)
-                    <td>{{ $item }}</td>
+                    @foreach($dataAsli as $data)
+                        @if($data->alternatif->nama == $value['nama_alternatif'])
+                        <td>{{ $data->nilai }}</td>
+                        @endif
                     @endforeach
                 </tr>
                 @endforeach

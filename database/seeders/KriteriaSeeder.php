@@ -23,7 +23,7 @@ class KriteriaSeeder extends Seeder
             ['nama' => 'Tindakan Medis Terakhir','bobot' => 8 ,'tipe' => 'benefit'],
             ['nama' => 'Konsumsi Obat','bobot' => 8 ,'tipe' => 'benefit'],
             ['nama' => 'Riwayat Kebiasaan Donor Darah','bobot' => 8 ,'tipe' => 'benefit'],
-            ['nama' => 'Penyakit Menular','bobot' => 10 ,'tipe' => 'benefit'] 
+            ['nama' => 'Riwayat Tranfusi Darah','bobot' => 10 ,'tipe' => 'benefit'] 
         ];
         foreach ($arr as $key => $value) {
             Kriteria::create($value);

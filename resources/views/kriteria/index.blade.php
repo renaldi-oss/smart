@@ -18,7 +18,7 @@
                     <th>Kode</th>
                     <th>Nama Kriteria</th>
                     <th>Bobot Kriteria</th>
-                    <th>tipe</th>
+                    {{-- <th>tipe</th> --}}
                     @if (auth()->user()->level === 'admin')
                         <th data-orderable="false">Opsi</th>
                     @endif
@@ -31,7 +31,7 @@
                     <td>C{{ str_pad($kriteria->id, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $kriteria->nama }}</td>
                     <td>{{ $kriteria->bobot }}%</td>
-                    <td>{{ $kriteria->tipe }}</td>
+                    {{-- <td>{{ $kriteria->tipe }}</td> --}}
                     @if (auth()->user()->level === 'admin')
                         <td class="d-flex justify-content-center">
                             <a href="{{ route('kriteria.edit', [$kriteria->id]) }}" class="btn btn-sm btn-info mr-2">Edit</a>

@@ -15,6 +15,7 @@ class PerhitunganController extends Controller
             "kriteria.nama as nama_kriteria",
             "alternatif.nama as nama_alternatif",
             "parameter.bobot as bobot_parameter",
+            "nilai.nilai as nilai_parameter"
         )
             ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
             ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
@@ -44,7 +45,11 @@ class PerhitunganController extends Controller
         }
         return collect(['kriteria' => $kriteria_, 'nilai' => $nilai]);
     }
-
+    private function dataAsli(){
+        // ambil semua nilai dari tabel nilai
+        $dataAsli = Nilai::get();
+        return $dataAsli;
+    }
     // step 1 normalisasi
     private function normalisasi(){
         // normalisasi kriteria
@@ -67,6 +72,7 @@ class PerhitunganController extends Controller
             ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
             ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
             ->get();
+        // dd($nilaiParameter[0]);
         return $nilaiParameter;
     }
 
@@ -111,29 +117,50 @@ class PerhitunganController extends Controller
 
     // step 3 perhitungan nilai akhir
     private function nilaiAkhir(){
+        $nilai = collect([]);
         $nilaiAkhir = collect([]);
         $utility = $this->utility();
-        foreach($utility->groupBy('nama_alternatif') as $key => $value){
-            $sumUtility = $value->sum('nilai_utility');
-            $nilaiAkhir->push(collect([
-                'nama_alternatif' => $key,
-                'nilai_akhir' => number_format($sumUtility,2)
+        $normalisasi = $this->normalisasi();
+        // setiap nilai utility dikalikan dengan normalisasi kriteria yang sesuai
+        foreach($utility as $key => $value){
+            $nilai->push(collect([
+                'nama_alternatif' => $value['nama_alternatif'],
+                'nama_kriteria' => $value['nama_kriteria'],
+                'nilai_utility' => $value['nilai_utility'] * $normalisasi->firstWhere('nama', $value['nama_kriteria'])->normalisasi,
             ]));
         }
-        // dd($nilaiAkhir);
+        dd($nilai);
+
+
+        // foreach($utility->groupBy('nama_alternatif') as $key => $value){
+        //     $sumUtility = $value->sum('nilai_utility');
+        //     $nilaiAkhir->push(collect([
+        //         'nama_alternatif' => $key,
+        //         'nilai_akhir' => number_format($sumUtility,2)
+        //     ]));
+        // }
+ 
         return $nilaiAkhir;
     }
     // step 4 perankingan
     private function ranking(){
         $nilaiAkhir = $this->nilaiAkhir();
-        $ranking = $nilaiAkhir->sortByDesc('nilai_akhir');
-        return $ranking;
+        $ranking = $nilaiAkhir->sortByDesc('nilai_akhir')->values();
+        $result = collect([]);
+        foreach($ranking as $key => $value){
+            $result->push(collect([
+                'nama_alternatif' => $value['nama_alternatif'],
+                'nilai_akhir' => $value['nilai_akhir'],
+                'ranking' => $key + 1
+            ]));
+        }
+        return $result;
     }
     
     public function index()
     {   
         // dd($this->nilaiAkhir(), $this->ranking());
-
+        // dd($this->utility());
         $data = $this->data();
         foreach ($data as $value) {
             if (count($value) == 0) {
@@ -144,6 +171,7 @@ class PerhitunganController extends Controller
         return view('perhitungan.index', [
             'kriteria_' => $data['kriteria'], 
             'nilai' => $data['nilai'],
+            'dataAsli' => $this->dataAsli(), // untuk menampilkan data asli dari tabel nilai
             'normalisasi' => $this->normalisasi(),
             'parameter' => $this->parameter(),
             'utility' => $this->utility(),
