@@ -12,14 +12,11 @@
         </div>
         <p class="mb-0">
             Contoh : <br>
-            <strong>Alternatif A</strong> memiliki nilai kriteria <strong>0.5</strong> dan <strong>0.8</strong> dengan
-            bobot kriteria <strong>0.2</strong> dan <strong>0.8</strong>. <br>
-            Maka, nilai utility dari <strong>Alternatif A</strong> adalah <strong>0.5 x 0.2 + 0.8 x 0.8 = 0.74</strong>
-        </p>
-
-        <p class="mb-0">
-            Setelah mendapatkan nilai utility, maka nilai utility tersebut akan dihitung dengan rumus
-            <strong>Utility / Total Utility</strong> untuk mendapatkan nilai utility yang telah dinormalisasi.
+            <strong>Alternatif Ibnu Hajar</strong> memiliki nilai kriteria <strong>80</strong> dengan
+            <strong>kriteria maximal</strong> : <strong>90</strong> dan <strong>kriteria minimal</strong> : <strong>70</strong><br>
+            {{-- perhitungan  --}}
+            <strong>C<small>out</small></strong> = (80 - 70) / (90 - 70) <br>
+            <strong>C<small>out</small></strong> = 0.5 <br>
         </p>
     </div>
 </div>

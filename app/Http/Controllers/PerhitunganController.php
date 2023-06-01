@@ -121,25 +121,23 @@ class PerhitunganController extends Controller
         $nilaiAkhir = collect([]);
         $utility = $this->utility();
         $normalisasi = $this->normalisasi();
-        // setiap nilai utility dikalikan dengan normalisasi kriteria yang sesuai
         foreach($utility as $key => $value){
             $nilai->push(collect([
                 'nama_alternatif' => $value['nama_alternatif'],
                 'nama_kriteria' => $value['nama_kriteria'],
-                'nilai_utility' => $value['nilai_utility'] * $normalisasi->firstWhere('nama', $value['nama_kriteria'])->normalisasi,
+                'normalisasi' => $normalisasi->firstWhere('nama', $value['nama_kriteria'])->normalisasi, // ambil nilai normalisasi dari kriteria
+                'nilai_utility' => $value['nilai_utility'],
+                'hasil' => $value['nilai_utility'] * $normalisasi->firstWhere('nama', $value['nama_kriteria'])->normalisasi,
             ]));
         }
-        dd($nilai);
-
-
-        // foreach($utility->groupBy('nama_alternatif') as $key => $value){
-        //     $sumUtility = $value->sum('nilai_utility');
-        //     $nilaiAkhir->push(collect([
-        //         'nama_alternatif' => $key,
-        //         'nilai_akhir' => number_format($sumUtility,2)
-        //     ]));
-        // }
- 
+        // dd($nilai);
+        foreach($nilai->groupBy('nama_alternatif') as $key => $value){
+            $sumUtility = $value->sum('hasil');
+            $nilaiAkhir->push(collect([
+                'nama_alternatif' => $key,
+                'nilai_akhir' => number_format($sumUtility,2)
+            ]));
+        }
         return $nilaiAkhir;
     }
     // step 4 perankingan
@@ -189,8 +187,19 @@ class PerhitunganController extends Controller
             }
         };
 
-        $content = view('perhitungan.cetak', ['kriteria_' => $data['kriteria'], 'nilai' => $data['nilai']]);
-        $html2pdf = new Html2Pdf('P', 'A4', 'en', true, 'UTF-8', [10, 5, 10, 0]);
+        $content = view('perhitungan.cetak', 
+        [
+            'kriteria_' => $data['kriteria'], 
+            'nilai' => $data['nilai'],
+            'dataAsli' => $this->dataAsli(), // untuk menampilkan data asli dari tabel nilai
+            'normalisasi' => $this->normalisasi(),
+            'parameter' => $this->parameter(),
+            'utility' => $this->utility(),
+            'nilaiAkhir' => $this->nilaiAkhir(),
+            'ranking' => $this->ranking(),
+        ]);
+        // $html2pdf = new Html2Pdf('P', 'A4', 'en', true, 'UTF-8', [10, 5, 10, 0]);
+        $html2pdf = new Html2Pdf('L', 'A4', 'en', true, 'UTF-8', [10, 5, 10, 0]);
         $html2pdf->pdf->SetTitle('Cetak Data Perhitungan');
         $html2pdf->writeHTML($content);
         $html2pdf->output("perhitungan.pdf");

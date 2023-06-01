@@ -31,7 +31,7 @@
             border: thin solid black;
             vertical-align: middle;
             text-align: center;
-            padding: 10px;
+            padding: 5px;
         }
 
         tr,
@@ -49,7 +49,7 @@
         <thead>
             <tr>
                 @foreach ($kriteria_ as $kriteria)
-                <th>{{ $kriteria->nama }}</th>
+                <th><?= str_replace(' ', '<br>', $kriteria->nama) ?></th>
                 @endforeach
             </tr>
         </thead>
