@@ -11,8 +11,7 @@
         </div>
         <p class="mb-0">
             Contoh : <br>
-            <strong>Alternatif Ibnu Hajar</strong> memiliki nilai utility <strong>0.5</strong> dengan
-            <strong>normalisasi bobot kriteria</strong> : <strong>0.5</strong><br>
+            <strong>Alternatif Ibnu Hajar</strong><br>
             <strong>N<small>akhir</small></strong> = (0.5 * 0.12) + (0 * 0.1) + (0 * 0.12) + (1 * 0.1) + (0.5 * 0.12) + (0.5 * 0.1) + (1 * 0.08) + (0.5 * 0.08) + (1 * 0.08) + (1 * 0.1)<br>
             <strong>N<small>akhir</small></strong> = (0.06) + (0) + (0) + (0.1) + (0.06) + (0.05) + (0.08) + (0.04) + (0.08) + (0.1) <br>
             <strong>N<small>akhir</small></strong> = 0.57
