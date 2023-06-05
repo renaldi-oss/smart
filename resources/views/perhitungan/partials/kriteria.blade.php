@@ -6,8 +6,11 @@
         <table class="table align-items-center table-hover table-bordered">
             <thead class="thead-light">
                 <tr>
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach ($kriteria_ as $kriteria)
-                    <th>{{ $kriteria->nama }}</th>
+                    <th>{{ $kriteria->nama }} (C{{ $i++ }})</th>
                     @endforeach
                 </tr>
             </thead>

@@ -32,9 +32,12 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $a = 1;
+                @endphp
                 @foreach ($nilaiAkhir as $i)
                 <tr>
-                    <td>{{ $i['nama_alternatif'] }}</td>
+                    <td>{{ $i['nama_alternatif'] }} (A{{ $a++ }})</td>
                     <td>{{ $i['nilai_akhir'] }}</td>
                     @foreach ($ranking as $r)
                         @if($r['nama_alternatif'] == $i['nama_alternatif'])

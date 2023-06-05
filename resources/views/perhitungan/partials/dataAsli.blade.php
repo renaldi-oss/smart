@@ -7,15 +7,21 @@
             <thead class="thead-light">
                 <tr>
                     <th>A/C</th>
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach ($kriteria_ as $kriteria)
-                    <th data-orderable="false">{{ $kriteria->nama }}</th>
+                    <th data-orderable="false">{{ $kriteria->nama }} (C{{ $i++ }})</th>
                     @endforeach
+                    @php
+                        $i = 1;
+                    @endphp
                 </tr>
             </thead>
             <tbody>
                 @foreach ($nilai as $value)
                 <tr>
-                    <th>{{ $value['nama_alternatif'] }}</th>
+                    <th>{{ $value['nama_alternatif'] }} (A{{ $i++ }})</th>
                     @foreach($dataAsli as $data)
                         @if($data->alternatif->nama == $value['nama_alternatif'])
                         <td>{{ $data->nilai }}</td>

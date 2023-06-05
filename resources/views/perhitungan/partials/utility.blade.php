@@ -29,15 +29,21 @@
             <thead class="thead-light">
                 <tr>
                     <th>Alternatif</th>
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach ($kriteria_ as $kriteria)
-                    <th data-orderable="false">{{ $kriteria->nama }}</th>
+                    <th data-orderable="false">{{ $kriteria->nama }} (C{{ $i++ }})</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 1;
+                @endphp
                 @foreach ($nilai as $value)
                 <tr>
-                    <th>{{ $value['nama_alternatif'] }}</th>
+                    <th>{{ $value['nama_alternatif'] }} (A{{ $i++ }})</th>
                     @foreach ($utility as $util)
 
                         @if($util['nama_alternatif'] == $value['nama_alternatif'])
