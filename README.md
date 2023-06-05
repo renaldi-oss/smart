@@ -1,5 +1,5 @@
 <h1 align="center">DSS Metode SMART</h1>
-<p align="center">Project SPK yang dikembangkan oleh <a href="https://github.com/renaldi-oss"> Aldi</a>& <a href="https://github.com/onynovianti"> Ony</a> </p>
+<p align="center">Project SPK yang dikembangkan oleh <a href="https://github.com/renaldi-oss"> Aldi</a> & <a href="https://github.com/onynovianti"> Ony</a> </p>
 <p align="center">
 
 ![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
