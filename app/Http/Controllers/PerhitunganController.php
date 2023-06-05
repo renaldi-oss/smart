@@ -100,7 +100,7 @@ class PerhitunganController extends Controller
                     $utility->push(collect([
                         'nama_alternatif' => $item->nama_alternatif,
                         'nama_kriteria' => $item->nama_kriteria,
-                        'nilai_utility' => round(($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),2),
+                        'nilai_utility' => round(($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),5),
                         'max' => $nilaiMax[$item->nama_kriteria],
                         'min' => $nilaiMin[$item->nama_kriteria],
                         'bobot_parameter' => $item->bobot_parameter,
