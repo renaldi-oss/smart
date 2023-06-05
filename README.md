@@ -28,17 +28,15 @@ php artisan migrate:fresh --seed
 php artisan serve
 ```
 
-### Roadmap
-#### main priority
-- [x] CRUD Kriteria
-- [x] CRUD Alternatif
-- [x] CRUD Sub Kriteria
-- [x] CRUD Nilai
-- [x] logika perhitungan SMART
-##### secondary priority
-- [ ] export to pdf
+## About
+DSS SMART is a web-based application that can help you to make a decision based on the data you input. This application is using SMART method to calculate the data and give you the result. This application is created for college assignment.
+> **Note:** The **export to pdf** button is currently not match with the data that you input. We are still working on it.
 
-data based on excel file you can find it in google drive <a href="https://docs.google.com/spreadsheets/d/1SBPqudjSR2Atde_ZuHN7WRjummOgMItF/edit?usp=share_link&ouid=104273544754647004878&rtpof=true&sd=true ">here</a>
+## Screenshot SMART Method
+![Screenshot SMART Method](https://user-images.githubusercontent.com/73483996/137630787-1b6b8b9a-4b9a-4b0a-8b0a-2b0b0b0b0b0b.png)
+
+## Dataset
+Data based on excel file you can find it in google drive <a href="https://docs.google.com/spreadsheets/d/1SBPqudjSR2Atde_ZuHN7WRjummOgMItF/edit?usp=share_link&ouid=104273544754647004878&rtpof=true&sd=true ">here</a>
 
 ## Contributing
 not accepting any contribution because this project is for college assignment
