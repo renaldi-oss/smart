@@ -33,7 +33,8 @@ DSS SMART is a web-based application that can help you to make a decision based 
 > **Note:** The **export to pdf** button is currently not match with the data that you input. We are still working on it.
 
 ## Screenshot SMART Method
-![Screenshot SMART Method](./public/assets/img/ss/beranda.jpeg)
+![Screenshot SMART Method]
+<a link href="https://drive.google.com/file/d/1anpS-lqxYcLZkzel2rvxhrEfg46uqp67/view?usp=share_link">Screenshot Aplikasi</a>
 
 ## Dataset
 Data based on excel file you can find it in google drive <a href="https://docs.google.com/spreadsheets/d/1SBPqudjSR2Atde_ZuHN7WRjummOgMItF/edit?usp=share_link&ouid=104273544754647004878&rtpof=true&sd=true ">here</a>
