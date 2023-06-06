@@ -135,7 +135,7 @@ class PerhitunganController extends Controller
             $sumUtility = $value->sum('hasil');
             $nilaiAkhir->push(collect([
                 'nama_alternatif' => $key,
-                'nilai_akhir' => number_format($sumUtility,2)
+                'nilai_akhir' => number_format($sumUtility,5)
             ]));
         }
         return $nilaiAkhir;
@@ -151,7 +151,7 @@ class PerhitunganController extends Controller
                 'nilai_akhir' => $value['nilai_akhir'],
                 'ranking' => $key + 1
             ]));
-        }
+        } 
         return $result;
     }
     
