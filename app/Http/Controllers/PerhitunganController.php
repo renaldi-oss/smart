@@ -80,38 +80,35 @@ class PerhitunganController extends Controller
     private function utility(){
         $utility = collect([]);
         $nilaiParameter = $this->parameter();
-        // dd($nilaiParameter);
         // step 2.1 mencari nilai max & min dari setiap kriteria
-        $nilaiMax = $nilaiParameter->where('tipe_kriteria', 'benefit')->groupBy('nama_kriteria')->map(function($item){
-            return $item->pluck('bobot_parameter')->max();
+        $nilaiParameter->groupBy('nama_kriteria')->each(function($item, $key) use (&$nilaiMax, &$nilaiMin){
+            $nilaiMax[$key] = $item->pluck('bobot_parameter')->max();
+            $nilaiMin[$key] = $item->pluck('bobot_parameter')->min();
         });
-        $nilaiMin = $nilaiParameter->where('tipe_kriteria', 'benefit')->groupBy('nama_kriteria')->map(function($item){
-            return $item->pluck('bobot_parameter')->min();
-        });
-        $max = array_values($nilaiMax->toArray());
-        $min = array_values($nilaiMin->toArray());
-        // dd($max, $min);
         // step 2.2 perhitungan nilai utility(benefit & cost)
-        
-        foreach($nilaiParameter->groupBy('tipe_kriteria') as $key => $value){
-            // step 2.2.1 perhitungan nilai utility benefit
-            if($key == 'benefit'){
-                $value->map(function ($item) use ($utility, $nilaiMax, $nilaiMin) {
-                    $utility->push(collect([
-                        'nama_alternatif' => $item->nama_alternatif,
-                        'nama_kriteria' => $item->nama_kriteria,
-                        'nilai_utility' => round(($item->bobot_parameter - $nilaiMin[$item->nama_kriteria]) / ($nilaiMax[$item->nama_kriteria] - $nilaiMin[$item->nama_kriteria]),5),
-                        'max' => $nilaiMax[$item->nama_kriteria],
-                        'min' => $nilaiMin[$item->nama_kriteria],
-                        'bobot_parameter' => $item->bobot_parameter,
-                    ]));
-                });
-            // step 2.2.2 perhitungan nilai utility cost
+        foreach($nilaiParameter as $parameter){
+            // dd($parameter);
+            if($parameter->tipe_kriteria == 'benefit'){
+                $utility->push(collect([
+                    'nama_alternatif' => $parameter->nama_alternatif,
+                    'nama_kriteria' => $parameter->nama_kriteria,
+                    'nilai_utility' => round(($parameter->bobot_parameter - $nilaiMin[$parameter->nama_kriteria]) / ($nilaiMax[$parameter->nama_kriteria] - $nilaiMin[$parameter->nama_kriteria]),5),
+                    'max' => $nilaiMax[$parameter->nama_kriteria],
+                    'min' => $nilaiMin[$parameter->nama_kriteria],
+                    'bobot_parameter' => $parameter->bobot_parameter,
+                ]));
             }else{
-                
+                $utility->push(collect([
+                    'nama_alternatif' => $parameter->nama_alternatif,
+                    'nama_kriteria' => $parameter->nama_kriteria,
+                    'nilai_utility' => round(($nilaiMax[$parameter->nama_kriteria] - $parameter->bobot_parameter) / ($nilaiMax[$parameter->nama_kriteria] - $nilaiMin[$parameter->nama_kriteria]),5),
+                    'max' => $nilaiMax[$parameter->nama_kriteria],
+                    'min' => $nilaiMin[$parameter->nama_kriteria],
+                    'bobot_parameter' => $parameter->bobot_parameter,
+                ]));
             }
-            // dd($utility);
         }
+        // dd($utility);
         return $utility;
     }
 
