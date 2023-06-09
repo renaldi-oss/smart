@@ -103,20 +103,25 @@ class NilaiController extends Controller
      * @param  \App\Models\Nilai  $nilai
      * @return \Illuminate\Http\Response
      */
-    public function edit($alternatif_id)
+    public function edit($nama_alternatif)
     {
-        // dd($alternatif_id);
+        $alternatif_id = Alternatif::firstWhere("nama", $nama_alternatif)->id;
         $nilai = Nilai::where('id', $alternatif_id)->get();
-        // dd($nilai);
         $parameter_id = $nilai->pluck('parameter_id');
         $result = Parameter::select(
             "parameter.id",
             "parameter.kriteria_id",
             "kriteria.nama as nama_kriteria",
             "parameter.nama as nama_parameter",
+            "parameter.bobot as bobot_parameter",
         )
             ->join("kriteria", "kriteria.id", "=", "parameter.kriteria_id")->get();
-        return view('nilai.edit', ['result' => $result, 'parameter_id' => $parameter_id, 'alternatif_id' => $alternatif_id, 'nama_alternatif' => Alternatif::firstWhere("id", $alternatif_id)->nama]);
+
+        return view('nilai.edit', [
+            'result' => $result, 
+            'parameter_id' => $parameter_id, 
+            'alternatif_id' => $alternatif_id, 
+            'nama_alternatif' => Alternatif::firstWhere("id", $alternatif_id)->nama]);
     }
 
     /**
@@ -128,6 +133,7 @@ class NilaiController extends Controller
      */
     public function update($alternatif_id, FormNilaiRequest $request)
     {
+        dd($request->all());
         $request->validated();
         try {
             DB::beginTransaction();
@@ -145,8 +151,9 @@ class NilaiController extends Controller
         }
     }
 
-    public function destroy($alternatif_id)
+    public function destroy($nama_alternatif)
     {
+        $alternatif_id = Alternatif::firstWhere("nama", $nama_alternatif)->id;
         Nilai::where("alternatif_id", $alternatif_id)->delete();
         return redirect()->route('nilai.index')->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil dihapus.');
     }

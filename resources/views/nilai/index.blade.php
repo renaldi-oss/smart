@@ -49,18 +49,21 @@
 </div>
 <div class="col-lg-12 mb-4">
     <!-- Simple Tables -->
+    @php
+        $i = 1;
+    @endphp
     @foreach ($result->groupBy('nama_alternatif') as $key => $value)
     <div class="card mb-4" id="{{ str_replace(' ', '-', $key) }}">
         <div class="card-header py-3 row">
-            <h4 class="col-md-6 mb-2 font-weight-bold text-primary">Alternatif : {{ $key }}</h4>
+            <h4 class="col-md-6 mb-2 font-weight-bold text-primary">{{ $i++ }}.Alternatif : {{ $key }}</h4>
             <div class="col-md-6 d-flex justify-content-end">
                 <a href="#daftar-alternatif">
                     <button class="btn btn-sm btn-primary mr-2">Ke Daftar</button>
                 </a>
-                <a href="{{ route('nilai.edit', $value[0]->id) }}">
+                <a href="{{ route('nilai.edit', $key) }}">
                     <button class="btn btn-sm btn-info mr-2">Ubah</button>
                 </a>
-                <form method="POST" action="{{ route('nilai.destroy', $value[0]->id) }}">
+                <form method="POST" action="{{ route('nilai.destroy', $key) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button type="submit" class="btn btn-sm btn-danger"
@@ -72,15 +75,16 @@
             <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                     <tr>
-                        @foreach ($value->groupBy("nama_kriteria")->keys() as $kriteria)
-                        <th class="text-center">{{ $kriteria }}</th>
+                        {{-- {{ dd($value) }} --}}
+                        @foreach ($value as $v)
+                        <th class="text-center">{{ $v->nama_kriteria }}</th>
                         @endforeach
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        @foreach ($value as $item)
-                        <td class="text-center">{{ $item->nilai }}</td>
+                        @foreach ($value as $v)
+                        <td class="text-center">{{ $v->nilai }}</td>
                         @endforeach
                     </tr>
                 </tbody>
