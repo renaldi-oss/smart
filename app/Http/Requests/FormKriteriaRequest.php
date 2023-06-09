@@ -25,7 +25,8 @@ class FormKriteriaRequest extends FormRequest
     {
         return [
             'nama' => 'required',
-            'bobot' => 'required|numeric'
+            'bobot' => 'required|numeric',
+            'tipe' => 'required'
         ];
     }
 }

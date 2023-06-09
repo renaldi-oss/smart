@@ -105,7 +105,9 @@ class NilaiController extends Controller
      */
     public function edit($alternatif_id)
     {
-        $nilai = Nilai::where("alternatif_id", $alternatif_id)->get();
+        // dd($alternatif_id);
+        $nilai = Nilai::where('id', $alternatif_id)->get();
+        // dd($nilai);
         $parameter_id = $nilai->pluck('parameter_id');
         $result = Parameter::select(
             "parameter.id",

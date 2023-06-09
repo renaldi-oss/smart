@@ -8,7 +8,7 @@
     <div class="input-group">
         <input type="text" class="form-control @error('bobot') is-invalid @enderror" id="input-bobot" name="bobot" placeholder="Masukkan Bobot Kriteria" value="{{ old('bobot', ($kriteria->bobot ?? '')) }}" onkeypress="return checkNumber(event)">
         <div class="input-group-append">
-            <span class="input-group-text">%</span>
+            <span class="input-group-text"></span>
         </div>
         <x-errormessage error="bobot" />
     </div>

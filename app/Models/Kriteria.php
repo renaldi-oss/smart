@@ -9,7 +9,7 @@ class Kriteria extends Model
 {
     use HasFactory;
     protected $table = 'kriteria';
-    protected $fillable = ['nama','bobot'];
+    protected $fillable = ['nama','bobot','tipe'];
 
     public function parameter()
     {
