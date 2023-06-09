@@ -11,10 +11,10 @@
         </div>
         <p class="mb-0">
             Contoh : <br>
-            <strong>Alternatif Ibnu Hajar</strong><br>
-            <strong>N<small>akhir</small></strong> = (0.5 * 0.12) + (0 * 0.1) + (0 * 0.12) + (1 * 0.1) + (0.5 * 0.12) + (0.5 * 0.1) + (1 * 0.08) + (0.5 * 0.08) + (1 * 0.08) + (1 * 0.1)<br>
-            <strong>N<small>akhir</small></strong> = (0.06) + (0) + (0) + (0.1) + (0.06) + (0.05) + (0.08) + (0.04) + (0.08) + (0.1) <br>
-            <strong>N<small>akhir</small></strong> = 0.57
+            <strong>Alternatif A1</strong><br>
+            <strong>N<small>akhir</small></strong> = (1 * 0.25) + (0.3333333333 * 0.15) + (1 * 0.10) + (1 * 0.10) + (1 * 0.10) + (1 * 0.10) + (0 * 0.05) + (1 * 0.05) + (0.25 * 0.05) + (0.5 * 0.05)<br> 
+            <strong>N<small>akhir</small></strong> = 0.25 + 0.05 + 0.10 + 0.10 + 0.10 + 0.10 + 0 + 0.05 + 0.0125 + 0.025<br> 
+            <strong>N<small>akhir</small></strong> = 0.78750
         </p>
     </div>
 </div>

@@ -12,11 +12,12 @@
         </div>
         <p class="mb-0">
             Contoh : <br>
-            <strong>Alternatif Ibnu Hajar</strong> memiliki nilai kriteria <strong>80</strong> dengan
-            <strong>kriteria maximal</strong> : <strong>90</strong> dan <strong>kriteria minimal</strong> : <strong>70</strong><br>
+            <strong>Alternatif A1</strong> memiliki nilai kriteria <strong>4</strong> dengan
+            <strong>kriteria maximal</strong> : <strong>4</strong> dan <strong>kriteria minimal</strong> : <strong>3</strong><br>
             {{-- perhitungan  --}}
-            <strong>C<small>out</small></strong> = (80 - 70) / (90 - 70) <br>
-            <strong>C<small>out</small></strong> = 0.5 <br>
+            <strong>C<small>out</small></strong> = (4 - 3) / (4 - 3) <br>
+            <strong>C<small>out</small></strong> = 1 / 1 <br>
+            <strong>C<small>out</small></strong> = 1 <br>
         </p>
     </div>
 </div>
