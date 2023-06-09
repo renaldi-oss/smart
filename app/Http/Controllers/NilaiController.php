@@ -71,30 +71,30 @@ class NilaiController extends Controller
     public function store(FormNilaiRequest $request)
     {
         $request->validated();
-        // try {
-        //     DB::beginTransaction();
-        //     foreach ($request->kriteria_id as $key => $value) {
-        //         Nilai::create([
-        //             'kriteria_id' => $value,
-        //             'alternatif_id' => $request->alternatif_id,
-        //             'parameter_id' => $request->parameter_id[$key + 1],
-        //             'nilai' => $request->nilai[$key + 1]
-        //         ]);
-        //     }
-        //     DB::commit();
-        //     return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->route('nilai.create', ['alternatif_id' => $request->alternatif_id])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
-        // }
-        foreach ($request->kriteria_id as $key => $value) {
-            Nilai::create([
-                'kriteria_id' => $value,
-                'alternatif_id' => $request->alternatif_id,
-                'parameter_id' => $request->parameter_id[$key + 1],
-                'nilai' => $request->nilai[$key + 1]
-            ]);
+        try {
+            DB::beginTransaction();
+            foreach ($request->kriteria_id as $key => $value) {
+                Nilai::create([
+                    'kriteria_id' => $value,
+                    'alternatif_id' => $request->alternatif_id,
+                    'parameter_id' => $request->parameter_id[$key + 1],
+                    'nilai' => $request->nilai[$key + 1]
+                ]);
+            }
+            DB::commit();
+            return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('nilai.create', ['alternatif_id' => $request->alternatif_id])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
         }
+        // foreach ($request->kriteria_id as $key => $value) {
+        //     Nilai::create([
+        //         'kriteria_id' => $value,
+        //         'alternatif_id' => $request->alternatif_id,
+        //         'parameter_id' => $request->parameter_id[$key + 1],
+        //         'nilai' => $request->nilai[$key + 1]
+        //     ]);
+        // }
     }
 
     /**

@@ -14,16 +14,16 @@ class KriteriaSeeder extends Seeder
     public function run()
     {
         $arr = [
-            ['nama' => 'Usia','bobot'=> 12 ,'tipe' => 'benefit'],
-            ['nama' => 'Berat Badan','bobot'=> 10 ,'tipe' => 'benefit'],
-            ['nama' => 'Tekanan Darah','bobot'=> 12 ,'tipe' => 'benefit'],
-            ['nama' => 'Temperatur Tubuh','bobot'=> 10 ,'tipe' => 'benefit'],
-            ['nama' => 'Hemoglobin (HB) Darah','bobot' => 12 ,'tipe' => 'benefit'],
-            ['nama' => 'Kadar Gula Darah','bobot' => 10 ,'tipe' => 'benefit'],
-            ['nama' => 'Tindakan Medis Terakhir','bobot' => 8 ,'tipe' => 'benefit'],
-            ['nama' => 'Konsumsi Obat','bobot' => 8 ,'tipe' => 'benefit'],
-            ['nama' => 'Riwayat Kebiasaan Donor Darah','bobot' => 8 ,'tipe' => 'benefit'],
-            ['nama' => 'Riwayat Tranfusi Darah','bobot' => 10 ,'tipe' => 'benefit'] 
+            ['nama' => 'Hasil Proses Wawancara','bobot'=> 5 ,'tipe' => 'benefit'],
+            ['nama' => 'Index Prestasi Kumulatif (IPK)','bobot'=> 3 ,'tipe' => 'benefit'],
+            ['nama' => 'Status Kepemilikan KIP','bobot'=> 2 ,'tipe' => 'benefit'],
+            ['nama' => 'Status Kepemilikan KKS','bobot'=> 2 ,'tipe' => 'benefit'],
+            ['nama' => 'Penghasilan Orang Tua (ayah)','bobot' => 2 ,'tipe' => 'cost'],
+            ['nama' => 'Penghasilan Orang tua (ibu)','bobot' => 2 ,'tipe' => 'cost'],
+            ['nama' => 'Status Kepemilikan Rumah','bobot' => 1 ,'tipe' => 'cost'],
+            ['nama' => 'Besaran Daya Listrik','bobot' => 1 ,'tipe' => 'cost'],
+            ['nama' => 'Besaran Luas Tanah','bobot' => 1 ,'tipe' => 'cost'],
+            ['nama' => 'Jenis Sumber Air','bobot' => 1 ,'tipe' => 'cost'] 
         ];
         foreach ($arr as $key => $value) {
             Kriteria::create($value);
