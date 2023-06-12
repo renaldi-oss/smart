@@ -11,13 +11,25 @@
             <img src="{{ asset('assets/img/perhitungan/utility.png') }}" alt="utility" class="img-fluid">
         </div>
         <p class="mb-0">
-            Contoh : <br>
-            <strong>Alternatif A1</strong> memiliki nilai kriteria <strong>4</strong> dengan
+            Contoh Benefit: <br>
+            <strong>U<small>1</small>(a<small>1</small>)</strong> memiliki nilai kriteria <strong>4</strong> dengan
             <strong>kriteria maximal</strong> : <strong>4</strong> dan <strong>kriteria minimal</strong> : <strong>3</strong><br>
             {{-- perhitungan  --}}
-            <strong>C<small>out</small></strong> = (4 - 3) / (4 - 3) <br>
-            <strong>C<small>out</small></strong> = 1 / 1 <br>
-            <strong>C<small>out</small></strong> = 1 <br>
+            <strong>U<small>1</small>(a<small>1</small>)</strong> = (4 - 3) / (4 - 3) <br>
+            <strong>U<small>1</small>(a<small>1</small>)</strong> = 1 / 1 <br>
+            <strong>U<small>1</small>(a<small>1</small>)</strong> = 1 <br>
+        </p>
+        <div class="text-center">
+            <img src="{{ asset('assets/img/perhitungan/utility-cost.png') }}" alt="utility" class="img-fluid">
+        </div>
+        <p class="mb-0">
+            Contoh Cost: <br>
+            <strong>U<small>5</small>(a<small>1</small>)</strong> memiliki nilai kriteria <strong>1</strong> dengan
+            <strong>kriteria maximal</strong> : <strong>5</strong> dan <strong>kriteria minimal</strong> : <strong>1</strong><br>
+            {{-- perhitungan  --}}
+            <strong>U<small>5</small>(a<small>1</small>)</strong> = (5 - 1) / (5 - 1) <br>
+            <strong>U<small>5</small>(a<small>1</small>)</strong> = 4 / 4 <br>
+            <strong>U<small>5</small>(a<small>1</small>)</strong> = 1 <br>
         </p>
     </div>
 </div>
