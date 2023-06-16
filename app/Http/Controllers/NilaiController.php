@@ -59,7 +59,7 @@ class NilaiController extends Controller
             "parameter.nama as nama_parameter",
         )->join("kriteria", "kriteria.id", "=", "parameter.kriteria_id")->get();
 
-        return view('nilai.create', ['result' => $result, 'nama_alternatif' => Alternatif::find(request('alternatif_id'))->nama]);
+        return view('nilai.create', ['result' => $result, 'nama_alternatif' => Alternatif::find(request('alternatif_id'))->nama, 'alternatif_id' => '']);
     }
 
     /**
@@ -69,33 +69,35 @@ class NilaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(FormNilaiRequest $request)
-    {
-        $request->validated();
-        try {
-            DB::beginTransaction();
-            foreach ($request->kriteria_id as $key => $value) {
+{
+    $request->validated();
+
+    try {
+        DB::beginTransaction();
+
+        $kriteriaData = $request->input('kriteria_id', []);
+        $nilaiData = $request->input('nilai_', []);
+        $parameterData = $request->input('parameter_id', []);
+
+        foreach ($kriteriaData as $key => $value) {
+            if (isset($parameterData[$key+1]) && isset($nilaiData[$key+1])) {
                 Nilai::create([
                     'kriteria_id' => $value,
                     'alternatif_id' => $request->alternatif_id,
-                    'parameter_id' => $request->parameter_id[$key + 1],
-                    'nilai' => $request->nilai[$key + 1]
+                    'parameter_id' => $parameterData[$key+1],
+                    'nilai' => $nilaiData[$key+1]
                 ]);
             }
-            DB::commit();
-            return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('nilai.create', ['alternatif_id' => $request->alternatif_id])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
         }
-        // foreach ($request->kriteria_id as $key => $value) {
-        //     Nilai::create([
-        //         'kriteria_id' => $value,
-        //         'alternatif_id' => $request->alternatif_id,
-        //         'parameter_id' => $request->parameter_id[$key + 1],
-        //         'nilai' => $request->nilai[$key + 1]
-        //     ]);
-        // }
+
+        DB::commit();
+        return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil ditambahkan');
+    } catch (\Throwable $th) {
+        DB::rollback();
+        return redirect()->route('nilai.create', ['alternatif_id' => $request->alternatif_id])->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
     }
+}
+
 
     /**
      * Show the form for editing the specified resource.
@@ -106,8 +108,23 @@ class NilaiController extends Controller
     public function edit($nama_alternatif)
     {
         $alternatif_id = Alternatif::firstWhere("nama", $nama_alternatif)->id;
-        $nilai = Nilai::where('id', $alternatif_id)->get();
-        $parameter_id = $nilai->pluck('parameter_id');
+        $nilai = Nilai::where('alternatif_id', $alternatif_id)->get();
+
+        $nilai = Nilai::select(
+            'nilai.id',
+            'nilai.alternatif_id',
+            'nilai.kriteria_id',
+            'nilai.parameter_id',
+            'nilai.nilai',
+            'alternatif.nama as nama_alternatif',
+            'kriteria.nama as nama_kriteria',
+            'parameter.nama as nama_parameter',
+        )
+            ->join("alternatif", "alternatif.id", "=", "nilai.alternatif_id")
+            ->join("kriteria", "kriteria.id", "=", "nilai.kriteria_id")
+            ->join("parameter", "parameter.id", "=", "nilai.parameter_id")
+            ->where('nilai.alternatif_id', $alternatif_id)
+            ->get();
         $result = Parameter::select(
             "parameter.id",
             "parameter.kriteria_id",
@@ -116,13 +133,37 @@ class NilaiController extends Controller
             "parameter.bobot as bobot_parameter",
         )
             ->join("kriteria", "kriteria.id", "=", "parameter.kriteria_id")->get();
-
-        return view('nilai.edit', [
+        return view('nilai.edit',[
+            'alternatif_id' => $alternatif_id,
+            'nilai' => $nilai,
             'result' => $result, 
-            'parameter_id' => $parameter_id, 
-            'alternatif_id' => $alternatif_id, 
-            'nama_alternatif' => Alternatif::firstWhere("id", $alternatif_id)->nama]);
+            'nama_alternatif' => Alternatif::firstWhere("id", $alternatif_id)->nama,
+            'alternatif_id' => $alternatif_id
+        ]);
     }
+    // public function edit($nama_alternatif)
+    // {
+    //     $alternatif_id = Alternatif::firstWhere("nama", $nama_alternatif)->id;
+    //     $nilai = Nilai::where('alternatif_id', $alternatif_id)->get();
+        
+    //     $parameter_id = $nilai->pluck('parameter_id');
+    //     $result = Parameter::select(
+    //         "parameter.id",
+    //         "parameter.kriteria_id",
+    //         "kriteria.nama as nama_kriteria",
+    //         "parameter.nama as nama_parameter",
+    //         "parameter.bobot as bobot_parameter",
+    //     )
+    //         ->join("kriteria", "kriteria.id", "=", "parameter.kriteria_id")->get();
+        
+    //     return view('nilai.edit', [
+    //         'nilai' => $nilai,
+
+    //         'result' => $result, 
+    //         'parameter_id' => $parameter_id, 
+    //         'alternatif_id' => $alternatif_id, 
+    //         'nama_alternatif' => Alternatif::firstWhere("id", $alternatif_id)->nama]);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -133,22 +174,38 @@ class NilaiController extends Controller
      */
     public function update($alternatif_id, FormNilaiRequest $request)
     {
-        dd($request->all());
-        $request->validated();
-        try {
-            DB::beginTransaction();
-            $nilai = Nilai::where('alternatif_id', $alternatif_id)->get();
-            foreach ($nilai as $key => $value) {
-                $value->update([
-                    'parameter_id' => $request->parameter_id[$key + 1],
-                ]);
-            }
-            DB::commit();
-            return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route("nilai.edit", $alternatif_id)->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
+        $nilai = Nilai::where('alternatif_id', $alternatif_id)->get();
+    DB::beginTransaction();
+
+    $nilaiData = $request->input('nilai_', []);
+    $parameterData = $request->input('parameter_id', []);
+
+    foreach ($nilai as $key => $value) {
+        if (isset($nilaiData[$key+1]) && isset($parameterData[$key+1])) {
+            $value->update([
+                'parameter_id' => $parameterData[$key+1],
+                'nilai' => $nilaiData[$key+1]
+            ]);
         }
+    }
+
+    DB::commit();
+    return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil diperbarui.');
+        // try {
+        //     DB::beginTransaction();
+        //     $nilai = Nilai::where('alternatif_id', $alternatif_id)->get();
+        //     foreach ($nilai as $key => $value) {
+        //         $value->update([
+        //             'parameter_id' => $request->parameter_id[$key++],
+        //         ]);
+        //     }
+        //     DB::commit();
+        //     return redirect()->route("nilai.index")->with('status', 'success')->with('pesan', 'Data Nilai Alternatif berhasil diperbarui.');
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     $nama_alternatif = Alternatif::firstWhere("id", $alternatif_id)->nama;
+        //     return redirect()->route("nilai.edit", $nama_alternatif)->with('status', 'warning')->with('pesan', 'Nilai Pilihan Kriteria tidak lengkap.');
+        // }
     }
 
     public function destroy($nama_alternatif)
