@@ -26,7 +26,7 @@ class FormNilaiRequest extends FormRequest
     {
         return [
             'parameter_id.*' => 'required|exists:parameter,id',
-            'nilai.*' => 'required',
+            // 'nilai.*' => 'required',
             'alternatif_id' => 'required'            
         ];
     }
